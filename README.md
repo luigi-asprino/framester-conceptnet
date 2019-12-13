@@ -1,10 +1,13 @@
 # Framester-ConceptNet
 
+This repository contains:
+* A tool for transforming ConceptNet's CSV [dumps](https://github.com/commonsense/conceptnet5/wiki/Downloads#assertions) in NQUADS.
+
 
 ## ConceptNet Refactor
 
-This repository contains:
-* A script that serialises a ConceptNet's CSV [dump](https://github.com/commonsense/conceptnet5/wiki/Downloads#assertions) as follows.
+ConceptNet Refactor is a tool that enables to transform a ConceptNet's CSV [dump](https://github.com/commonsense/conceptnet5/wiki/Downloads#assertions) as follows.
+
 
 INPUT (CSV FORMAT)
 
@@ -29,5 +32,9 @@ Content of ${schemaFilePath}
 ```
 ${resourcePrefix}<ID_PREDICATE> rdf:type owl:ObjectProperty ${schemaBottomUpURI} .
 ```
+
+## License
+
+* ConceptNet Refactor is distributed under an [Apache License 2.0](https://raw.githubusercontent.com/luigi-asprino/framester-conceptnet/master/Software-LICENSE)
 
 
