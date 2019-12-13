@@ -1,7 +1,7 @@
 # Framester-ConceptNet
 
 This repository contains:
-* A tool for transforming ConceptNet's CSV [dumps](https://github.com/commonsense/conceptnet5/wiki/Downloads#assertions) in NQUADS.
+* A tool (i.e. ConceptNet Refactor) for transforming ConceptNet's CSV [dumps](https://github.com/commonsense/conceptnet5/wiki/Downloads#assertions) in NQUADS.
 
 
 ## ConceptNet Refactor
