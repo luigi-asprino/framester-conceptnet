@@ -2,6 +2,10 @@
 
 This repository contains:
 * A tool (i.e. ConceptNet Refactor) for transforming ConceptNet's CSV [dumps](https://github.com/commonsense/conceptnet5/wiki/Downloads#assertions) in NQUADS.
+* A set of links to the files generated with ConceptNet Refactor for the ConceptNet 5.7.0 CSV [dump](https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz):
+  * [ConceptNet RDF Dump](http://etna.istc.cnr.it/framester3/conceptnet/5.7.0/conceptnet-assertion-5.7.0.nq.gz) (i.e. ${conceptNetDumpFilePath})
+  * [Bottom-up Schema](http://etna.istc.cnr.it/framester3/conceptnet/5.7.0/conceptnet-assertion-5.7.0-schema.nq) (i.e. ${schemaFilePath})
+  * [Metadata](http://etna.istc.cnr.it/framester3/conceptnet/5.7.0/metadata.nq)
 
 
 ## ConceptNet Refactor
