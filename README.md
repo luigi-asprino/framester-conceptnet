@@ -40,13 +40,13 @@ ${resourcePrefix}<ID_PREDICATE> rdf:type owl:ObjectProperty ${schemaBottomUpURI}
 
 ## Data License
 
-* Data generated with ConceptNet Refactor is distributer under [CCBY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+* Data generated with ConceptNet Refactor is distributer under Creative Commons Attribution-ShareAlike 4.0 [CC BY SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Credits
 
 This work includes data from ConceptNet 5, which was compiled by the
 Commonsense Computing Initiative. ConceptNet 5 is freely available under
-the Creative Commons Attribution-ShareAlike license (CC BY SA 3.0) from
+the Creative Commons Attribution-ShareAlike license (CC BY SA 4.0) from
 http://conceptnet.io.
 
 The included data was created by contributors to Commonsense Computing
