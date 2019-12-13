@@ -34,8 +34,24 @@ Content of ${schemaFilePath}
 ${resourcePrefix}<ID_PREDICATE> rdf:type owl:ObjectProperty ${schemaBottomUpURI} .
 ```
 
-## License
+## Software License
 
 * ConceptNet Refactor is distributed under an [Apache License 2.0](https://raw.githubusercontent.com/luigi-asprino/framester-conceptnet/master/Software-LICENSE)
+
+## Data License
+
+* Data generated with ConceptNet Refactor is distributer under [CCBY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+## Credits
+
+This work includes data from ConceptNet 5, which was compiled by the
+Commonsense Computing Initiative. ConceptNet 5 is freely available under
+the Creative Commons Attribution-ShareAlike license (CC BY SA 3.0) from
+http://conceptnet.io.
+
+The included data was created by contributors to Commonsense Computing
+projects, contributors to Wikimedia projects, DBPedia, OpenCyc, Games
+with a Purpose, Princeton University's WordNet, Francis Bond's Open
+Multilingual WordNet, and Jim Breen's JMDict.
 
 
