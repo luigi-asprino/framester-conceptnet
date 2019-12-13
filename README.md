@@ -31,7 +31,7 @@ Content of ${conceptNetDumpFilePath}
 ${resourcePrefix}<ID_SUBJECT> ${resourcePrefix}<ID_PREDICATE> ${resourcePrefix}<ID_OBJECT> ${resourcePrefix}<ID_EDGE> .
 ${resourcePrefix}<ID_EDGE> <https://w3id.org/framester/metadata/schema/isSubGraphOf> ${graph} ${graph} .
 ${resourcePrefix}<ID_EDGE> <https://w3id.org/framester/metadata/schema/wasDerivedFrom> ${conceptNetPrefix}<ID_EDGE> ${graph} .
-${resourcePrefix}<ID_EDGE> <https://w3id.org/framester/metadata/schema/conceptNetWeight> "<WEIGHT>"^^<http://www.w3.org/2001/XMLSchema#double> ${graph} .
+${resourcePrefix}<ID_EDGE> <https://w3id.org/framester/conceptnet/schema/conceptNetWeight> "<WEIGHT>"^^<http://www.w3.org/2001/XMLSchema#double> ${graph} .
 ```
 
 Content of ${schemaFilePath}
