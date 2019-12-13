@@ -6,6 +6,7 @@ This repository contains:
   * [ConceptNet RDF Dump](http://etna.istc.cnr.it/framester3/conceptnet/5.7.0/conceptnet-assertion-5.7.0.nq.gz) (i.e. ${conceptNetDumpFilePath})
   * [Bottom-up Schema](http://etna.istc.cnr.it/framester3/conceptnet/5.7.0/conceptnet-assertion-5.7.0-schema.nq) (i.e. ${schemaFilePath})
   * [Metadata](http://etna.istc.cnr.it/framester3/conceptnet/5.7.0/metadata.nq)
+* A [wiki](https://github.com/luigi-asprino/framester-conceptnet/wiki) describing how to query the generated dataset.
 
 
 ## ConceptNet Refactor
