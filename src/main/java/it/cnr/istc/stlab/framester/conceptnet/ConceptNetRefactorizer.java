@@ -24,7 +24,6 @@ import org.apache.jena.riot.system.StreamRDFWriter;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.DatasetGraphFactory;
 import org.apache.jena.sparql.core.Quad;
-import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -44,6 +43,8 @@ public class ConceptNetRefactorizer {
 		String wasDerivedFrom = "https://w3id.org/framester/metadata/schema/wasDerivedFrom";
 		String conceptNetWeight = "https://w3id.org/framester/conceptnet/schema/conceptNetWeight";
 		String conceptNetIdentifier = "https://w3id.org/framester/conceptnet/schema/conceptNetIdentifier";
+		String assertion = "https://w3id.org/framester/conceptnet/schema/Assertion";
+		String relation = "https://w3id.org/framester/conceptnet/schema/Relation";
 
 		Configuration c = Configuration.getConfiguration();
 		logger.info("Reading: {}", c.getConceptNetDumpFilePath());
@@ -53,6 +54,8 @@ public class ConceptNetRefactorizer {
 		Reader decoderLC = new InputStreamReader(gzipStreamLC);
 		long lines = FileUtils.countNumberOfLines(decoderLC);
 		logger.info("Number of lines {}", lines);
+		
+		int lineErrors=0, jsonErrors=0;
 
 		InputStream fileStream = new FileInputStream(c.getConceptNetDumpFilePath());
 		InputStream gzipStream = new GZIPInputStream(fileStream);
@@ -65,8 +68,6 @@ public class ConceptNetRefactorizer {
 		StreamRDF stream = StreamRDFWriter.getWriterStream(gzip, RDFFormat.NQ);
 
 		stream.prefix("fcn570", c.getConceptNetPrefix());
-		stream.prefix("fcn-schema", "https://w3id.org/framester/conceptnet/schema/");
-		stream.prefix("f-meta", "https://w3id.org/framester/metadata/schema/");
 
 		OntModel schema = ModelFactory.createOntologyModel();
 
@@ -81,7 +82,7 @@ public class ConceptNetRefactorizer {
 				String p = c.getResourcePrefix() + strings[1].substring(1);
 				String s = c.getResourcePrefix() + strings[2].substring(1);
 				String o = c.getResourcePrefix() + strings[3].substring(1);
-				
+
 				if (!strings[1].equals("/r/ExternalURL")) {
 					o = strings[3];
 				}
@@ -93,6 +94,10 @@ public class ConceptNetRefactorizer {
 				// streaming assertion isSubgGraphOf conceptnet
 				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(sng),
 						NodeFactory.createURI(isSubGraphOf), NodeFactory.createURI(c.getGraph()))));
+
+				// streaming assertion isSubgGraphOf conceptnet
+				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()),
+						new Triple(NodeFactory.createURI(sng), RDF.type.asNode(), NodeFactory.createURI(assertion))));
 
 				// streaming assertion wasDerivedFrom
 				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(sng),
@@ -111,11 +116,10 @@ public class ConceptNetRefactorizer {
 						NodeFactory.createURI(conceptNetIdentifier), NodeFactory.createURI(strings[3]))));
 
 				// adding relation to bottom up schema
-				schema.add(schema.createObjectProperty(p), RDF.type, OWL.ObjectProperty);
+				schema.add(schema.createObjectProperty(p), RDF.type, schema.createResource(relation));
 
 				// adding conceptnet identifier of relation
-				schema.add(schema.createObjectProperty(p), schema.createProperty(conceptNetIdentifier),
-						OWL.ObjectProperty);
+				schema.add(schema.createObjectProperty(p), schema.createProperty(conceptNetIdentifier), strings[1]);
 
 				try {
 					JSONObject obj = new JSONObject(strings[4]);
@@ -124,10 +128,12 @@ public class ConceptNetRefactorizer {
 									.createLiteral(LiteralLabelFactory.createTypedLiteral(obj.getDouble("weight"))))));
 				} catch (org.json.JSONException e) {
 					logger.error("Error with parsing JSON at line {}", line);
+					jsonErrors++;
 				}
 
 			} catch (ArrayIndexOutOfBoundsException e) {
 				logger.error("Error with parsing line {}", line);
+				lineErrors++;
 			}
 
 			pc.increase();
@@ -146,6 +152,11 @@ public class ConceptNetRefactorizer {
 		d.end();
 		d.close();
 		RDFDataMgr.write(new FileOutputStream(new File(c.getSchemaFilePath())), d, RDFFormat.NQ);
+		
+		logger.info("JSONErrors {}", jsonErrors);
+		logger.info("Line errors {}",lineErrors);
+		logger.info("End");
+		
 
 	}
 
