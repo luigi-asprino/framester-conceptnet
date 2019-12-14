@@ -31,13 +31,18 @@ Content of ${conceptNetDumpFilePath}
 ```
 ${resourcePrefix}<ID_SUBJECT> ${resourcePrefix}<ID_PREDICATE> ${resourcePrefix}<ID_OBJECT> ${resourcePrefix}<ID_EDGE> .
 ${resourcePrefix}<ID_EDGE> <https://w3id.org/framester/metadata/schema/isSubGraphOf> ${graph} ${graph} .
+${resourcePrefix}<ID_EDGE> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/framester/conceptnet/schema/Assertion> ${graph} .
+${resourcePrefix}<ID_EDGE> <https://w3id.org/framester/conceptnet/schema/conceptNetIdentifier> <https://w3id.org/framester/conceptnet/schema/Assertion> "<ID_EDGE>" ${graph} .
+${resourcePrefix}<ID_SUBJECT> <https://w3id.org/framester/conceptnet/schema/conceptNetIdentifier> "<ID_SUBJECT>" ${graph} .
+${resourcePrefix}<ID_OBJECT> <https://w3id.org/framester/conceptnet/schema/conceptNetIdentifier> "<ID_OBJECT>" ${graph} .
 ${resourcePrefix}<ID_EDGE> <https://w3id.org/framester/metadata/schema/wasDerivedFrom> ${conceptNetPrefix}<ID_EDGE> ${graph} .
 ${resourcePrefix}<ID_EDGE> <https://w3id.org/framester/conceptnet/schema/conceptNetWeight> "<WEIGHT>"^^<http://www.w3.org/2001/XMLSchema#double> ${graph} .
 ```
 
 Content of ${schemaFilePath}
 ```
-${resourcePrefix}<ID_PREDICATE> rdf:type owl:ObjectProperty ${schemaBottomUpURI} .
+${resourcePrefix}<ID_PREDICATE> http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/framester/conceptnet/schema/Relation> ${schemaBottomUpURI} .
+${resourcePrefix}<ID_PREDICATE> <https://w3id.org/framester/conceptnet/schema/conceptNetIdentifier> "<ID_PREDICATE>" ${schemaBottomUpURI} .
 ```
 
 ## Software License
