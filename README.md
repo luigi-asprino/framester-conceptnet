@@ -6,6 +6,7 @@ This repository contains:
   * [ConceptNet RDF Dump](http://etna.istc.cnr.it/framester3/conceptnet/5.7.0/conceptnet-assertion-5.7.0.nq.gz) (i.e. ${conceptNetDumpFilePath})
   * [Bottom-up Schema](http://etna.istc.cnr.it/framester3/conceptnet/5.7.0/conceptnet-assertion-5.7.0-schema.nq) (i.e. ${schemaFilePath})
   * [Metadata](http://etna.istc.cnr.it/framester3/conceptnet/5.7.0/metadata.nq)
+  * N.B.: The framework was unable to parse 126 lines of the ConceptNet 5.7.0 CSV dump and 1032 JSObject associated with ConceptNet's assertions.
 * A [wiki](https://github.com/luigi-asprino/framester-conceptnet/wiki) describing how to query the generated dataset.
 * An [ontology](http://150.146.207.114/lode/extract?url=https%3A%2F%2Fraw.githubusercontent.com%2Fluigi-asprino%2Fframester-conceptnet%2Fmaster%2Fontology%2Flatest%2Fontology.owl&lang=en) that formalizes the schema used in Framester for structuring knowledge from ConceptNet.
 
