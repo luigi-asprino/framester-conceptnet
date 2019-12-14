@@ -42,7 +42,8 @@ public class ConceptNetRefactorizer {
 
 		String isSubGraphOf = "https://w3id.org/framester/metadata/schema/isSubGraphOf";
 		String wasDerivedFrom = "https://w3id.org/framester/metadata/schema/wasDerivedFrom";
-		String conceptNetWeight = "https://w3id.org/framester/metadata/schema/conceptNetWeight";
+		String conceptNetWeight = "https://w3id.org/framester/conceptnet/schema/conceptNetWeight";
+		String conceptNetIdentifier = "https://w3id.org/framester/conceptnet/schema/conceptNetIdentifier";
 
 		Configuration c = Configuration.getConfiguration();
 		logger.info("Reading: {}", c.getConceptNetDumpFilePath());
@@ -63,27 +64,58 @@ public class ConceptNetRefactorizer {
 		GZIPOutputStream gzip = new GZIPOutputStream(new FileOutputStream(new File(c.getDumpRDF())));
 		StreamRDF stream = StreamRDFWriter.getWriterStream(gzip, RDFFormat.NQ);
 
+		stream.prefix("fcn570", c.getConceptNetPrefix());
+		stream.prefix("fcn-schema", "https://w3id.org/framester/conceptnet/schema/");
+		stream.prefix("f-meta", "https://w3id.org/framester/metadata/schema/");
+
 		OntModel schema = ModelFactory.createOntologyModel();
 
 		int line = 0;
 		while (ricsv.hasNext()) {
 
 			try {
+
 				String[] strings = (String[]) ricsv.next();
 				String sng = c.getResourcePrefix() + strings[0].substring(1);
 				String cn = c.getConceptNetPrefix() + strings[0].substring(1);
 				String p = c.getResourcePrefix() + strings[1].substring(1);
 				String s = c.getResourcePrefix() + strings[2].substring(1);
 				String o = c.getResourcePrefix() + strings[3].substring(1);
+				
+				if (!strings[1].equals("/r/ExternalURL")) {
+					o = strings[3];
+				}
 
+				// streaming assertion
 				stream.quad(new Quad(NodeFactory.createURI(sng),
 						new Triple(NodeFactory.createURI(s), NodeFactory.createURI(p), NodeFactory.createURI(o))));
+
+				// streaming assertion isSubgGraphOf conceptnet
 				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(sng),
 						NodeFactory.createURI(isSubGraphOf), NodeFactory.createURI(c.getGraph()))));
+
+				// streaming assertion wasDerivedFrom
 				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(sng),
 						NodeFactory.createURI(wasDerivedFrom), NodeFactory.createURI(cn))));
 
+				// streaming assertion conceptNetIdentifier
+				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(sng),
+						NodeFactory.createURI(conceptNetIdentifier), NodeFactory.createURI(strings[0]))));
+
+				// streaming concept identifier of the subject
+				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(s),
+						NodeFactory.createURI(conceptNetIdentifier), NodeFactory.createURI(strings[2]))));
+
+				// streaming concept identifer of the object
+				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(o),
+						NodeFactory.createURI(conceptNetIdentifier), NodeFactory.createURI(strings[3]))));
+
+				// adding relation to bottom up schema
 				schema.add(schema.createObjectProperty(p), RDF.type, OWL.ObjectProperty);
+
+				// adding conceptnet identifier of relation
+				schema.add(schema.createObjectProperty(p), schema.createProperty(conceptNetIdentifier),
+						OWL.ObjectProperty);
 
 				try {
 					JSONObject obj = new JSONObject(strings[4]);
