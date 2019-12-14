@@ -51,7 +51,7 @@ ${resourcePrefix}<ID_PREDICATE> <https://w3id.org/framester/conceptnet/schema/co
 
 ## Data License
 
-* Data generated with ConceptNet Refactor is distributer under Creative Commons Attribution-ShareAlike 4.0 [CC BY SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+* Data generated with ConceptNet Refactor is distributed under Creative Commons Attribution-ShareAlike 4.0 [CC BY SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
 
 ## Credits
 
