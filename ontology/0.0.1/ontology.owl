@@ -56,7 +56,7 @@ Multilingual WordNet, and Jim Breen&apos;s JMDict.</rdfs:comment>
         <rdfs:subPropertyOf rdf:resource="https://w3id.org/framester/metadata/schema/confidence"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="https://w3id.org/framester/conceptnet/schema/Assertion"/>
-        <rdfs:comment xml:lang="en">The weight of ConceptNet&apos;s assertion.</rdfs:comment>
+        <rdfs:comment xml:lang="en">The weight of a ConceptNet&apos;s assertion.</rdfs:comment>
         <rdfs:label>weight</rdfs:label>
     </owl:DatatypeProperty>
     
@@ -85,7 +85,7 @@ Multilingual WordNet, and Jim Breen&apos;s JMDict.</rdfs:comment>
     <!-- https://w3id.org/framester/conceptnet/schema/Relation -->
 
     <owl:Class rdf:about="https://w3id.org/framester/conceptnet/schema/Relation">
-        <rdfs:comment xml:lang="en">A relation between two ConceptNet&apos;s concept.</rdfs:comment>
+        <rdfs:comment xml:lang="en">A relation between two ConceptNet&apos;s concepts.</rdfs:comment>
         <rdfs:label xml:lang="en">Relation</rdfs:label>
     </owl:Class>
 </rdf:RDF>
