@@ -16,13 +16,19 @@ This repository contains:
 ConceptNet Refactor is a tool that enables to transform a ConceptNet's CSV [dump](https://github.com/commonsense/conceptnet5/wiki/Downloads#assertions) as follows.
 
 
-INPUT (CSV FORMAT)
+### INPUT (CSV FORMAT)
 
 ```
 <ID_EDGE> <ID_PREDICATE>  <ID_SUBJECT>  <ID_OBJECT> {"dataset": "..", "license": "..", "sources": [..], "weight": <WEIGHT>}
 ```
 
-OUTPUT
+### OUTPUT
+
+In order to indicate metadata associated with ConcpetNet's assertions (like the weight associated to an assertion), the tool uses the techiniques called Single-triple Named Graph.
+Each assertion (i.e. a triple) is stored in a different named graph and metadata which collects metadata for the assertion.
+Then, following to [Framester's metdata schema](http://150.146.207.114/lode/extract?url=https%3A%2F%2Fraw.githubusercontent.com%2Fluigi-asprino%2Fframester-metadata%2Fmaster%2Fontology%2Flatest%2Fontology.owl&lang=en), all the single-triple named graphsare aggregated under another named graph which contains all the data and metadata of the ConceptNet's release.
+
+
 
 The output is split into two files ${conceptNetDumpFilePath} and ${schemaFilePath}:
 N.B. With notation ${variable} we indicate a variable in the [configuration file](https://github.com/luigi-asprino/framester-conceptnet/blob/master/src/main/resources/properties.properties).
