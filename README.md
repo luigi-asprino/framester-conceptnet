@@ -24,9 +24,9 @@ ConceptNet Refactor is a tool that enables to transform a ConceptNet's CSV [dump
 
 ### OUTPUT
 
-In order to indicate metadata associated with ConcpetNet's assertions (like the weight associated to an assertion), the tool uses the techiniques called Single-triple Named Graph.
-Each assertion (i.e. a triple) is stored in a different named graph and metadata which collects metadata for the assertion.
-Then, following to [Framester's metdata schema](http://150.146.207.114/lode/extract?url=https%3A%2F%2Fraw.githubusercontent.com%2Fluigi-asprino%2Fframester-metadata%2Fmaster%2Fontology%2Flatest%2Fontology.owl&lang=en), all the single-triple named graphsare aggregated under another named graph which contains all the data and metadata of the ConceptNet's release.
+In order to indicate metadata associated with ConcpetNet's assertions (like the weight associated to an assertion), the tool uses the techinique called Single-triple Named Graph.
+With this technique each assertion (i.e. a triple) is stored in a different named graph and metadata associated with assertion are assocated to the named graph.
+Then, following [Framester's metdata schema](http://150.146.207.114/lode/extract?url=https%3A%2F%2Fraw.githubusercontent.com%2Fluigi-asprino%2Fframester-metadata%2Fmaster%2Fontology%2Flatest%2Fontology.owl&lang=en), all the single-triple named graphs are aggregated under another named graph which contains all the data and metadata of the ConceptNet's release.
 
 
 
