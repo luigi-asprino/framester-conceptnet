@@ -54,8 +54,8 @@ public class ConceptNetRefactorizer {
 		Reader decoderLC = new InputStreamReader(gzipStreamLC);
 		long lines = FileUtils.countNumberOfLines(decoderLC);
 		logger.info("Number of lines {}", lines);
-		
-		int lineErrors=0, jsonErrors=0;
+
+		int lineErrors = 0, jsonErrors = 0;
 
 		InputStream fileStream = new FileInputStream(c.getConceptNetDumpFilePath());
 		InputStream gzipStream = new GZIPInputStream(fileStream);
@@ -83,7 +83,7 @@ public class ConceptNetRefactorizer {
 				String s = c.getResourcePrefix() + strings[2].substring(1);
 				String o = c.getResourcePrefix() + strings[3].substring(1);
 
-				if (!strings[1].equals("/r/ExternalURL")) {
+				if (strings[1].equals("/r/ExternalURL")) {
 					o = strings[3];
 				}
 
@@ -104,16 +104,22 @@ public class ConceptNetRefactorizer {
 						NodeFactory.createURI(wasDerivedFrom), NodeFactory.createURI(cn))));
 
 				// streaming assertion conceptNetIdentifier
-				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(sng),
-						NodeFactory.createURI(conceptNetIdentifier), NodeFactory.createURI(strings[0]))));
+				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()),
+						new Triple(NodeFactory.createURI(sng), NodeFactory.createURI(conceptNetIdentifier),
+								NodeFactory.createLiteral(LiteralLabelFactory.createTypedLiteral(strings[0])))));
 
 				// streaming concept identifier of the subject
-				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(s),
-						NodeFactory.createURI(conceptNetIdentifier), NodeFactory.createURI(strings[2]))));
+				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()),
+						new Triple(NodeFactory.createURI(s), NodeFactory.createURI(conceptNetIdentifier),
+								NodeFactory.createLiteral(LiteralLabelFactory.createTypedLiteral(strings[2])))));
 
 				// streaming concept identifer of the object
-				stream.quad(new Quad(NodeFactory.createURI(c.getGraph()), new Triple(NodeFactory.createURI(o),
-						NodeFactory.createURI(conceptNetIdentifier), NodeFactory.createURI(strings[3]))));
+				if (!strings[1].equals("/r/ExternalURL")) {
+					LiteralLabelFactory.createTypedLiteral(strings[3]);
+					stream.quad(new Quad(NodeFactory.createURI(c.getGraph()),
+							new Triple(NodeFactory.createURI(o), NodeFactory.createURI(conceptNetIdentifier),
+									NodeFactory.createLiteral(LiteralLabelFactory.createTypedLiteral(strings[3])))));
+				}
 
 				// adding relation to bottom up schema
 				schema.add(schema.createObjectProperty(p), RDF.type, schema.createResource(relation));
@@ -152,11 +158,10 @@ public class ConceptNetRefactorizer {
 		d.end();
 		d.close();
 		RDFDataMgr.write(new FileOutputStream(new File(c.getSchemaFilePath())), d, RDFFormat.NQ);
-		
+
 		logger.info("JSONErrors {}", jsonErrors);
-		logger.info("Line errors {}",lineErrors);
+		logger.info("Line errors {}", lineErrors);
 		logger.info("End");
-		
 
 	}
 
