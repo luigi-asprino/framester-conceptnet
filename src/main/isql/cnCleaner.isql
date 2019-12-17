@@ -48,3 +48,5 @@ SPARQL DELETE WHERE { GRAPH <https://w3id.org/framester/conceptnet/5.7.0> {?g <h
 SPARQL DELETE WHERE { GRAPH <https://w3id.org/framester/conceptnet/5.7.0> {?g <https://w3id.org/framester/metadata/schema/isSubGraphOf> <https://w3id.org/framester/conceptnet/5.7.0> .} GRAPH ?g {?s <https://w3id.org/framester/conceptnet/5.7.0/r/dbpedia/leader> ?o}};
 SPARQL DELETE WHERE { GRAPH <https://w3id.org/framester/conceptnet/5.7.0> {?g <https://w3id.org/framester/metadata/schema/isSubGraphOf> <https://w3id.org/framester/conceptnet/5.7.0> .} GRAPH ?g {?s <https://w3id.org/framester/conceptnet/5.7.0/r/dbpedia/occupation> ?o}};
 SPARQL DELETE WHERE { GRAPH <https://w3id.org/framester/conceptnet/5.7.0> {?g <https://w3id.org/framester/metadata/schema/isSubGraphOf> <https://w3id.org/framester/conceptnet/5.7.0> .} GRAPH ?g {?s <https://w3id.org/framester/conceptnet/5.7.0/r/dbpedia/product> ?o}};
+SPARQL DELETE WHERE { GRAPH <https://w3id.org/framester/conceptnet/5.7.0> { ?s <https://w3id.org/framester/conceptnet/schema/conceptNetIdentifier> ?o }};
+
