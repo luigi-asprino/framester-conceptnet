@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -63,13 +65,14 @@ public class ConceptNetRefactorizer {
 		BufferedReader buffered = new BufferedReader(decoder);
 		ProgressCounter pc = new ProgressCounter(lines);
 		RowsIteratorCSV ricsv = new RowsIteratorCSV(buffered, '\t');
+		
 		new File(c.getDumpRDF()).delete();
 		GZIPOutputStream gzip = new GZIPOutputStream(new FileOutputStream(new File(c.getDumpRDF())));
 		StreamRDF stream = StreamRDFWriter.getWriterStream(gzip, RDFFormat.NQ);
 
-		stream.prefix("fcn570", c.getConceptNetPrefix());
-
 		OntModel schema = ModelFactory.createOntologyModel();
+
+		Map<String, Long> datasetCount = new HashMap<>();
 
 		int line = 0;
 		while (ricsv.hasNext()) {
@@ -132,6 +135,14 @@ public class ConceptNetRefactorizer {
 					stream.quad(new Quad(NodeFactory.createURI(c.getGraph()),
 							new Triple(NodeFactory.createURI(sng), NodeFactory.createURI(conceptNetWeight), NodeFactory
 									.createLiteral(LiteralLabelFactory.createTypedLiteral(obj.getDouble("weight"))))));
+					String dataset = obj.getString("dataset");
+					Long count = datasetCount.get(dataset);
+					if (count == null) {
+						datasetCount.put(dataset, 1L);
+					} else {
+						datasetCount.put(dataset, count + 1);
+					}
+
 				} catch (org.json.JSONException e) {
 					logger.error("Error with parsing JSON at line {}", line);
 					jsonErrors++;
@@ -161,11 +172,19 @@ public class ConceptNetRefactorizer {
 
 		logger.info("JSONErrors {}", jsonErrors);
 		logger.info("Line errors {}", lineErrors);
+
+		datasetCount.forEach((dataset, count) -> {
+			logger.info("{}\t{}", dataset, count);
+		});
+
 		logger.info("End");
 
 	}
 
 	public static void main(String[] args) throws IOException {
 		parseCN();
+//		Compression.printFirstLinesOfGZipFile(
+//				"/Users/lgu/Dropbox/Lavoro/Projects/Framester/f/Framester_v3/endpoint_v3/conceptnet/5.7.0/conceptnet-assertion-5.7.0.nq.gz",
+//				100);
 	}
 }
