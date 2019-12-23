@@ -6,9 +6,11 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 public class Configuration {
 
 	private String conceptNetDumpFilePath, resourcePrefix, graph, dumpRDF, conceptNetSchemaPrefix, conceptNetPrefix,
-			schemaFilePath, schemaBottomUpURI, metadataSchemaPrefix, outFolder,subGraphStructureURI;
+			schemaFilePath, schemaBottomUpURI, metadataSchemaPrefix, outFolder, subGraphStructureURI,
+			externalURLFilePath, externalURLsNamedGraph;
 	private static Configuration instance;
 	private static final String CONF_FILE = "config.properties";
+	private boolean extractExternalURLs = false;
 
 	private Configuration(String configFile) {
 		Configurations configs = new Configurations();
@@ -24,7 +26,10 @@ public class Configuration {
 			conceptNetSchemaPrefix = config.getString("conceptNetSchemaPrefix");
 			metadataSchemaPrefix = config.getString("metadataSchemaPrefix");
 			outFolder = config.getString("outFolder");
-			subGraphStructureURI=config.getString("subGraphStructureURI");
+			subGraphStructureURI = config.getString("subGraphStructureURI");
+			extractExternalURLs = config.getBoolean("extractExternalURLs");
+			externalURLFilePath = config.getString("externalURLFilePath");
+			externalURLsNamedGraph = config.getString("externalURLsNamedGraph");
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -84,6 +89,17 @@ public class Configuration {
 	public String getSubGraphStructureURI() {
 		return subGraphStructureURI;
 	}
-	
-	
+
+	public boolean isExtractExternalURLs() {
+		return extractExternalURLs;
+	}
+
+	public String getExternalURLFilePath() {
+		return externalURLFilePath;
+	}
+
+	public String getExternalURLsNamedGraph() {
+		return externalURLsNamedGraph;
+	}
+
 }

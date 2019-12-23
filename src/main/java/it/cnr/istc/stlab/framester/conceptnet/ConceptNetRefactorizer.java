@@ -24,6 +24,7 @@ import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.riot.system.StreamRDFWriter;
 import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -70,8 +71,16 @@ public class ConceptNetRefactorizer {
 		return streamMap.get(c.getGraph());
 	}
 
+	private StreamWrapper getExternalURLsStream() {
+		return streamMap.get(c.getExternalURLsNamedGraph());
+	}
+
 	private void setMainStream(StreamWrapper stream) {
 		streamMap.put(c.getGraph(), stream);
+	}
+
+	private void setExternalURLsStream(StreamWrapper stream) {
+		streamMap.put(c.getExternalURLsNamedGraph(), stream);
 	}
 
 	private StreamWrapper createStreamWrapperByStreamID(String id) throws FileNotFoundException, IOException {
@@ -88,6 +97,15 @@ public class ConceptNetRefactorizer {
 		GZIPOutputStream gzip = new GZIPOutputStream(new FileOutputStream(new File(c.getDumpRDF())));
 		StreamRDF stream = StreamRDFWriter.getWriterStream(gzip, RDFFormat.NQ);
 		StreamWrapper swMain = new StreamWrapper(c.getDumpRDF(), c.getGraph(), c.getGraph(), gzip, stream);
+		return swMain;
+	}
+
+	private StreamWrapper createExternalURLsStreamWrapper() throws FileNotFoundException, IOException {
+		new File(c.getExternalURLFilePath()).delete();
+		GZIPOutputStream gzip = new GZIPOutputStream(new FileOutputStream(new File(c.getExternalURLFilePath())));
+		StreamRDF stream = StreamRDFWriter.getWriterStream(gzip, RDFFormat.NQ);
+		StreamWrapper swMain = new StreamWrapper(c.getExternalURLFilePath(), c.getExternalURLsNamedGraph(),
+				c.getExternalURLsNamedGraph(), gzip, stream);
 		return swMain;
 	}
 
@@ -112,6 +130,10 @@ public class ConceptNetRefactorizer {
 
 		// setting main stream
 		setMainStream(createMainStreamWrapper());
+
+		if (c.isExtractExternalURLs()) {
+			setExternalURLsStream(createExternalURLsStreamWrapper());
+		}
 
 		// iterating over rows
 		int lineNumber = 0;
@@ -198,6 +220,9 @@ public class ConceptNetRefactorizer {
 
 		if (strings[1].equals("/r/ExternalURL")) {
 			o = strings[3];
+			getExternalURLsStream().quad(new Quad(NodeFactory.createURI(c.getExternalURLsNamedGraph()), new Triple(
+					NodeFactory.createURI(s), NodeFactory.createURI(OWL.sameAs.getURI()), NodeFactory.createURI(o))));
+
 		}
 
 		// streaming assertion on dataset graph
@@ -239,6 +264,7 @@ public class ConceptNetRefactorizer {
 			getMainStream().quad(new Quad(NodeFactory.createURI(c.getGraph()),
 					new Triple(NodeFactory.createURI(o), NodeFactory.createURI(conceptNetIdentifier),
 							NodeFactory.createLiteral(LiteralLabelFactory.createTypedLiteral(strings[3])))));
+
 		}
 
 		// adding relation to bottom up schema
