@@ -5,7 +5,8 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 
 public class Configuration {
 
-	private String conceptNetDumpFilePath, resourcePrefix, graph, dumpRDF, conceptNetPrefix, schemaFilePath,schemaBottomUpURI;
+	private String conceptNetDumpFilePath, resourcePrefix, graph, dumpRDF, conceptNetSchemaPrefix, conceptNetPrefix,
+			schemaFilePath, schemaBottomUpURI, metadataSchemaPrefix, outFolder,subGraphStructureURI;
 	private static Configuration instance;
 	private static final String CONF_FILE = "config.properties";
 
@@ -19,7 +20,11 @@ public class Configuration {
 			dumpRDF = config.getString("dumpRDF");
 			conceptNetPrefix = config.getString("conceptNetPrefix");
 			schemaFilePath = config.getString("schemaFilePath");
-			schemaBottomUpURI=config.getString("schemaBottomUpURI");
+			schemaBottomUpURI = config.getString("schemaBottomUpURI");
+			conceptNetSchemaPrefix = config.getString("conceptNetSchemaPrefix");
+			metadataSchemaPrefix = config.getString("metadataSchemaPrefix");
+			outFolder = config.getString("outFolder");
+			subGraphStructureURI=config.getString("subGraphStructureURI");
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -63,7 +68,22 @@ public class Configuration {
 	public String getSchemaBottomUpURI() {
 		return schemaBottomUpURI;
 	}
-	
-	
 
+	public String getConceptNetSchemaPrefix() {
+		return conceptNetSchemaPrefix;
+	}
+
+	public String getMetadataSchemaPrefix() {
+		return metadataSchemaPrefix;
+	}
+
+	public String getOutFolder() {
+		return outFolder;
+	}
+
+	public String getSubGraphStructureURI() {
+		return subGraphStructureURI;
+	}
+	
+	
 }

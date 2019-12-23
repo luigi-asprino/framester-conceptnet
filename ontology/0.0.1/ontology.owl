@@ -33,6 +33,26 @@ Multilingual WordNet, and Jim Breen&apos;s JMDict.</rdfs:comment>
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://w3id.org/framester/conceptnet/schema/sourceDataset -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/framester/conceptnet/schema/sourceDataset">
+        <rdfs:comment xml:lang="en">The ConceptNet&apos;s source dataset where the assertion comes from.</rdfs:comment>
+        <rdfs:label xml:lang="en">source dataset</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Data properties
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -76,8 +96,22 @@ Multilingual WordNet, and Jim Breen&apos;s JMDict.</rdfs:comment>
     <!-- https://w3id.org/framester/conceptnet/schema/Assertion -->
 
     <owl:Class rdf:about="https://w3id.org/framester/conceptnet/schema/Assertion">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://w3id.org/framester/conceptnet/schema/sourceDataset"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment xml:lang="en">An edge, or assertion, is a unit of knowledge in ConceptNet. It tells us a particular relation between natural-language terms, according to a particular source.</rdfs:comment>
         <rdfs:label xml:lang="en">Assertion</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/framester/conceptnet/schema/Concept -->
+
+    <owl:Class rdf:about="https://w3id.org/framester/conceptnet/schema/Concept">
+        <rdfs:label xml:lang="en">Concept</rdfs:label>
     </owl:Class>
     
 
